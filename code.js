@@ -9,8 +9,19 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const baseURL = "https://alfa-leetcode-api.onrender.com";
-
+const maxQs = 3300;
 var currQuestion = "";
+var allQs = [];
+function storeAll(json) {
+    console.log("storing all q's");
+    allQs = json.problemsetQuestionList;
+    console.log(allQs);
+}
+console.log("getting all problems");
+fetch(`${baseURL}/problems?limit=${maxQs}`)
+    .then((response) => response.json())
+    .then((json) => storeAll(json))
+    .catch((error) => console.error(`Error storing data: ${error.message}`));
 
 function findDaily() {
     let url = `${baseURL}/daily`;
@@ -20,23 +31,45 @@ function findDaily() {
         .catch((error) => console.error(`Error fetching data: ${error.message}`));
 }
 
-function findProblem() {
-    let url = `${baseURL}/problems`;
+// function findProblem() {
+//     let url = `${baseURL}/problems`;
+//     let diff = document.getElementById("difficulty").value;
+//     let filter = diff != "None";
+//     console.log("finding problem of diff: ", diff);
+//     fetch(url)
+//         .then((response) => response.json())
+//         .then((json) => {
+//             for (const q of json.problemsetQuestionList) {
+//                 if (!filter || q.difficulty == diff) {
+//                     console.log("found appropriate, getting: ", q.titleSlug);
+//                     getProblem(q.titleSlug);
+//                     break;
+//                 }
+//             }
+//         })
+//         .catch((error) => console.error(`Error finding data: ${error.message}`));
+// }
+
+async function findProblem() {
+    let i = Math.floor(Math.random() * maxQs); //start at random question
     let diff = document.getElementById("difficulty").value;
     let filter = diff != "None";
-    console.log("finding problem of diff: ", diff);
-    fetch(url)
-        .then((response) => response.json())
-        .then((json) => {
-            for (const q of json.problemsetQuestionList) {
-                if (!filter || q.difficulty == diff) {
-                    console.log("found appropriate, getting: ", q.titleSlug);
-                    getProblem(q.titleSlug);
-                    break;
-                }
+    console.log("searching for problem, starting at", i);
+    while (i < 3300) {
+        let q = allQs[i];
+        console.log("checking if problem is suitable", q);
+        if (!filter || q.difficulty == diff) { //check difficulty match
+            const alreadySolved = await checkProblem(q.titleSlug);
+            if (!q.isPaidOnly && !alreadySolved) { //check not paid & not solved recently
+                getProblem(q.titleSlug);
+                break;
             }
-        })
-        .catch((error) => console.error(`Error finding data: ${error.message}`));
+        }
+        i++;
+    }
+    if (i > 3300) {
+        alert("Error occured while searching for problem, please try again.");
+    }
 }
 
 function getProblem(titleSlug) {
@@ -49,14 +82,14 @@ function getProblem(titleSlug) {
 
 function displayResults(json) {
     currQuestion = json.titleSlug;
-    console.log("displaying results, set currq, ", currQuestion);
+    console.log("displaying results & setting currq!", currQuestion);
     document.getElementById("question").innerHTML = json.question;
     console.log(json);
     chrome.tabs.create({ url: json.link});
 }
 
 async function getCredit() {
-    const problemSolved = await checkProblem();
+    const problemSolved = await checkProblem(currQuestion);
     if (problemSolved) {
         alert("user completed the question, allow user to buy item");
     } else {
@@ -64,17 +97,15 @@ async function getCredit() {
     }
 }
 
-async function checkProblem() {
-    let url = `${baseURL}/candycane123/acSubmission`;
-    console.log("checking problem:", currQuestion);
+async function checkProblem(titleSlug) {
+    let url = `${baseURL}/candycane123/acSubmission?limit=100`;
+    console.log("checking if problem is solved:", titleSlug);
     try {
         const response = await fetch(url);
         const json = await response.json();
-        console.log(json);
         for (const i in json.submission) {
-            console.log("HERE");
-            console.log(json.submission[i].titleSlug, currQuestion);
-            if (json.submission[i].titleSlug == currQuestion) {
+            if (json.submission[i].titleSlug == titleSlug) {
+                console.log("found match!", json.submission[i].titleSlug, titleSlug)
                 return true;
             }
         }
