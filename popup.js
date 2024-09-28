@@ -52,6 +52,8 @@ document.getElementById('linkAccount').addEventListener('click', async () => {
     }
 });
 
+
+
 async function fetchLeetCodeUserData(username) {
     const apiUrl = `https://leetcode-stats-api.herokuapp.com/${username}`; // Example of unofficial LeetCode API
     try {

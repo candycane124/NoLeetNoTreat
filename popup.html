@@ -5,15 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="popup.js"></script>
     <title>NoLeetNoTreat</title>
+    <style>
+        #status {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div>
         <div>NoLeetNoTreat</div>
-        <h1>Link LeetCode Account</h1>
-        <input type="text" id="leetcode-username" placeholder="Enter LeetCode Username">
-        <button id="linkAccount">Link Account</button>
+        <div id="status"></div>
+        <div id="login">
+            <h1>Link LeetCode Account</h1>
+            <input type="text" id="leetcode-username" placeholder="Enter LeetCode Username">
+            <button id="linkAccount">Link Account</button>
 
-        <p id="status"></p>
+            <p id="status"></p>
+        </div>
 
         <script src="popup.js"></script>
         <div>
