@@ -7,7 +7,7 @@
       "default_popup": "popup.html",
       "default_icon": "placeholder.png"
     },
-    "permissions": ["activeTab"], 
+    "permissions": ["activeTab", "storage"], 
     "web_accessible_resources": [
     {
       "resources": ["assets/slogan.gif"],
@@ -17,7 +17,10 @@
     "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["popup.js"]
     }
-  ]
+  ],
+    "background": {
+      "service_worker": "background.js"
+    }
   }
