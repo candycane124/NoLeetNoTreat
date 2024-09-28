@@ -4,27 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="code.js"></script>
+    <link rel="stylesheet" href="code.css">
     <title>NoLeetNoTreat</title>
 </head>
 <body>
-    <div>
+    <div class="main">
         <div class="title">NoLeetNoTreat</div>
-        <div>
+        <div class="blurb">
             Complete a LeetCode problem before you make a purchase!
         </div>
-        <div>
-            <label for="difficulty">Filter by difficulty</label>
-            <select name="difficulty" id="difficulty">
-                <option value="None"></option>
-                <option value="Easy">Easy</option>
-                <option value="Medium">Medium</option>
-                <option value="Hard">Hard</option>
-            </select>
-            <button id="get-problem-button">Find Problem</button> or <button id="get-daily-button">Get Daily</button>
+        <div class="search">
+            <button id="get-problem-button">Find Problem</button>
+            <!-- or <button id="get-daily-button">Get Daily</button> -->
+            <div class="sub">advanced search:</div>
+            <div>
+                <label for="difficulty">Difficulty</label>
+                <select name="difficulty" id="difficulty">
+                    <option value="None"></option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+            <!-- add filter by tag here -->
         </div>
         <div id="question"></div>
-        <div>
-            (once you've completed the question)
+        <div id="completed">
+            <div class="blurb">Finished solving?</div>
             <button id="get-credit-button">Get Credit</button>
         </div>
     </div>
