@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("get-daily-button").addEventListener("click", findDaily);
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//     document.getElementById("get-daily-button").addEventListener("click", findDaily);
+// });
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("get-problem-button").addEventListener("click", findProblem);
 });
@@ -23,13 +23,13 @@ fetch(`${baseURL}/problems?limit=${maxQs}`)
     .then((json) => storeAll(json))
     .catch((error) => console.error(`Error storing data: ${error.message}`));
 
-function findDaily() {
-    let url = `${baseURL}/daily`;
-    fetch(url)
-        .then((response) => response.json())
-        .then((json) => getProblem(json.titleSlug))
-        .catch((error) => console.error(`Error fetching data: ${error.message}`));
-}
+// function findDaily() {
+//     let url = `${baseURL}/daily`;
+//     fetch(url)
+//         .then((response) => response.json())
+//         .then((json) => getProblem(json.titleSlug))
+//         .catch((error) => console.error(`Error fetching data: ${error.message}`));
+// }
 
 // function findProblem() {
 //     let url = `${baseURL}/problems`;
