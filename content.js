@@ -28,9 +28,11 @@ function initialize() {
                 popup.style.borderRadius = "8px";
                 popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
                 popup.innerHTML = `
-                    <h2>No Leet No Treat!</h2>
+                    <h2>Nice try...</h2>
+                    <img src="${chrome.runtime.getURL('assets/slogan.gif')}" alt="slogan" style="width:30%;" />
                     <p>Sustainability facts from OpenAI on your purchase.</p>
                     <p>Here's your LeetCode Question!</p>
+                    <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:40%;" />
                     <button id="close-popup">Close</button>
                 `;
 
