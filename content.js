@@ -3,9 +3,7 @@ console.log("Content script is running");
 function initialize() {
   console.log("Okay here");
   setTimeout(() => {
-    const payButton = document.querySelector(
-      'input[name="submit.add-to-cart"]'
-    );
+    const payButton = document.querySelector('input[name="submit.add-to-cart"]');
 
     const productTitleElement = document.getElementById("productTitle");
     const priceElement = document.querySelector(".a-price-whole");
@@ -16,43 +14,25 @@ function initialize() {
 
     console.log(`Product title: ${productTitle}`);
 
-    const productPrice = priceElement
-      ? priceElement.innerText.trim()
-      : "10";
+    const productPrice = priceElement ? priceElement.innerText.trim() : "10";
 
     console.log(`Price: ${productPrice}`);
 
     const prompt = `I'm about to buy ${productTitle} that costs around ${productPrice} dollars. Give me a short and brief but strong sentence or two on why I shouldn't buy it, and tie in a sustainability fact, that uses some kind of statistic.`;
-
-    // Fetch data from backend, but show popup immediately
-    fetch("http://localhost:3000/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt }),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Generated content:", data.response);
-        // Once the content is ready, update the popup
-        updatePopupContent(data.response);
-      })
-      .catch((error) => console.error("Error:", error));
 
     // Always show the popup first
     if (payButton) {
       payButton.setAttribute("type", "button");
       payButton.onclick = (event) => {
         event.preventDefault();
-        displayPopup(); 
+        displayPopup(prompt); // Pass the prompt to displayPopup
       };
     }
   }, 1500);
 }
 
 // Function to display the popup right away
-function displayPopup() {
+function displayPopup(prompt) {
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
   overlay.style.top = "0";
@@ -72,9 +52,7 @@ function displayPopup() {
   popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
   popup.innerHTML = `
               <h2>Nice try...</h2>
-              <img src="${chrome.runtime.getURL(
-                "assets/slogan.gif"
-              )}" alt="slogan" style="width:30%;" />
+              <img src="${chrome.runtime.getURL("assets/slogan.gif")}" alt="slogan" style="width:30%;" />
               <p>Sustainability facts from OpenAI on your purchase.</p>
               <p id="ai-response">Fetching sustainability facts...</p>
               <p>Here's your LeetCode Question!</p>
@@ -85,17 +63,33 @@ function displayPopup() {
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
 
+  // Fetch data from the backend right after displaying the popup
+  fetch("http://localhost:3000/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Generated content:", data.response);
+      updatePopupContent(data.response); // Update the popup content
+    })
+    .catch((error) => console.error("Error:", error));
+
+  // Function to update the popup content once the AI response is ready
+  function updatePopupContent(responseText) {
+    const aiResponseElement = document.getElementById("ai-response");
+    if (aiResponseElement) {
+      aiResponseElement.innerHTML = responseText;
+      console.log("Supposedly replaced text");
+    }
+  }
+
   document.getElementById("close-popup").onclick = () => {
     document.body.removeChild(overlay);
   };
-}
-
-// Function to update the popup content once the AI response is ready
-function updatePopupContent(responseText) {
-  const aiResponseElement = document.getElementById("ai-response");
-  if (aiResponseElement) {
-    aiResponseElement.innerHTML = responseText;
-  }
 }
 
 // Check if the DOM is already loaded
