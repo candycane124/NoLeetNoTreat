@@ -55,6 +55,10 @@ button:hover {
     gap: 20px;
 }
 
+#completed .blurb {
+    max-width: 200px;
+}
+
 #get-credit-button {
     flex: 1;
     color: black;
