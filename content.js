@@ -1,5 +1,7 @@
 console.log("Content script is running");
 
+var productTitle = "";
+
 function initialize() {
   console.log("Okay here");
   setTimeout(() => {
@@ -10,7 +12,7 @@ function initialize() {
     const productTitleElement = document.getElementById("productTitle");
     const priceElement = document.querySelector(".a-price-whole");
 
-    const productTitle = productTitleElement
+    productTitle = productTitleElement
       ? productTitleElement.innerText.trim()
       : "Amazon Product";
 
@@ -67,7 +69,6 @@ function displayPopup(prompt, prompt2) {
               <p>Sustainability facts from OpenAI on your purchase.</p>
               <p id="ai-response">Fetching sustainability facts...</p>
               <button id="open-code-button">I don't care</button>
-              <p>Here's your LeetCode Question!</p>
               <p id="quote">Inspiration coming..</p>
               <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:60%;" />
               <br/>
@@ -139,9 +140,10 @@ function displayPopup(prompt, prompt2) {
 }
 
 function openCode() {
-  console.log("Requesting tab info");
+  console.log("Requesting open side panel");
+  console.log("Item:", productTitle);
   // Send a message to the background script to open the side panel
-  chrome.runtime.sendMessage({ action: "openSidePanel" });
+  chrome.runtime.sendMessage({ action: "openSidePanel", item: productTitle });
 }
 
 function isItemAllowed(item_code) {
