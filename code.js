@@ -152,11 +152,13 @@ async function getCredit() {
 }
 
 async function checkProblem(titleSlug) {
-    let url = `${baseURL}/${sessionStorage.getItem('username')}/acSubmission?limit=100`;
+    let url = `${baseURL}/${localStorage.getItem('username')}/acSubmission?limit=20`;
     console.log("Checking if problem is solved:", titleSlug);
+    console.log(url);
     try {
         const response = await fetch(url);
         const json = await response.json();
+        console.log(json);
         for (const i in json.submission) {
             if (json.submission[i].titleSlug == titleSlug) {
                 console.log("found match!", json.submission[i].titleSlug, titleSlug)
