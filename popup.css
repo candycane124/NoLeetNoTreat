@@ -108,8 +108,9 @@ body {
     flex-direction: column;
   }
 
-  .linkAccount{
+  #linkAccount{
     width: 150px;
+    justify-content: center;
   }
 
   @font-face {
