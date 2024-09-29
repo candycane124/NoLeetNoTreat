@@ -16,13 +16,17 @@ var currTitle = localStorage.getItem("currTitle");
 if (!currQuestion) currQuestion = "";
 if (currTitle) document.getElementById("completed").innerHTML = `<div class="blurb">Finished solving ${currTitle}?</div><button id="get-credit-button">Get Credit</button>`;
 else currTitle = "";
-chrome.storage.local.get("currItem", function(result) {
-    console.log("Retrieved from extension storage:", result.currItem);
-    localStorage.setItem("currItem", result.currItem);
-});
-var currItem = localStorage.getItem("currItem");
-if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}!`;
-else document.getElementById("instruction").innerHTML = `Practice your coding skills on LeetCode!`;
+
+function displayCurrItem() {
+    chrome.storage.local.get("currItem", function(result) {
+        console.log("Retrieved from extension storage:", result.currItem);
+        localStorage.setItem("currItem", result.currItem);
+    });
+    var currItem = localStorage.getItem("currItem");
+    if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}!`;
+    else document.getElementById("instruction").innerHTML = `Practice your coding skills on LeetCode!`;    
+}
+displayCurrItem();
 
 function storeAll(json) {
     console.log("storing all q's");
@@ -48,28 +52,28 @@ if (!allQs) {
 // }
 
 async function findProblem() {
-    // let i = Math.floor(Math.random() * maxQs); //start at random question
-    // let diff = document.getElementById("difficulty").value;
-    // let filter = diff != "None";
-    // console.log("searching for problem, starting at", i);
-    // while (i < 3300) {
-    //     let q = allQs[i];
-    //     console.log("checking if problem is suitable", q);
-    //     if (!filter || q.difficulty == diff) { //check difficulty match
-    //         if (!q.isPaidOnly) { //check not paid only
-    //             const alreadySolved = await checkProblem(q.titleSlug);
-    //             if (!alreadySolved) { //check not solved recently
-    //                 getProblem(q.titleSlug);
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     i++;
-    // }
-    // if (i > 3300) {
-    //     alert("Error occured while searching for problem, please try again.");
-    // }
-    getProblem("two-sum");
+    let i = Math.floor(Math.random() * maxQs); //start at random question
+    let diff = document.getElementById("difficulty").value;
+    let filter = diff != "None";
+    console.log("searching for problem, starting at", i);
+    while (i < 3300) {
+        let q = allQs[i];
+        console.log("checking if problem is suitable", q);
+        if (!filter || q.difficulty == diff) { //check difficulty match
+            if (!q.isPaidOnly) { //check not paid only
+                const alreadySolved = await checkProblem(q.titleSlug);
+                if (!alreadySolved) { //check not solved recently
+                    getProblem(q.titleSlug);
+                    break;
+                }
+            }
+        }
+        i++;
+    }
+    if (i > 3300) {
+        alert("Error occured while searching for problem, please try again.");
+    }
+    // getProblem("two-sum");
 }
 
 function getProblem(titleSlug) {
@@ -96,7 +100,7 @@ function displayResults(json) {
 async function getCredit() {
     const problemSolved = await checkProblem(currQuestion);
     if (problemSolved) {
-        alert("Congratulations, you've completed the LeetCode Questoins! Return to get your Treat ;)");
+        alert("Congratulations, you've completed the LeetCode question! Refresh the page to get your Treat ;)");
 
         // Retrieve item_code from chrome storage
         chrome.storage.local.get("item_code", function(result) {
@@ -107,21 +111,37 @@ async function getCredit() {
             }
 
             // Check if allowed_items exists in localStorage
-            if (!localStorage.getItem("allowed_items")) {
-                // If no allowed_items, create it with the item_code
-                localStorage.setItem("allowed_items", JSON.stringify({ item_codes: [item_code] }));
-            } else {
-                // Parse the existing allowed_items from localStorage
-                const allowed_items = JSON.parse(localStorage.getItem("allowed_items"));
+
+            chrome.storage.local.get("allowed_items", function(data) {
+                let allowed_items = data.allowed_items || { item_codes: [] };
 
                 // Check if item_code is already in allowed_items
                 if (!allowed_items.item_codes.includes(item_code)) {
                     allowed_items.item_codes.push(item_code); // Add new item_code to the array
-                    localStorage.setItem("allowed_items", JSON.stringify(allowed_items)); // Save updated allowed_items
+                    chrome.storage.local.set({ allowed_items }, function() {
+                        console.log("Allowed items updated:", allowed_items);
+                    });
                 } else {
                     console.log("Item code is already in allowed_items.");
                 }
-            }
+            });
+
+
+            // if (!localStorage.getItem("allowed_items")) {
+            //     // If no allowed_items, create it with the item_code
+            //     localStorage.setItem("allowed_items", JSON.stringify({ item_codes: [item_code] }));
+            // } else {
+            //     // Parse the existing allowed_items from localStorage
+            //     const allowed_items = JSON.parse(localStorage.getItem("allowed_items"));
+
+            //     // Check if item_code is already in allowed_items
+            //     if (!allowed_items.item_codes.includes(item_code)) {
+            //         allowed_items.item_codes.push(item_code); // Add new item_code to the array
+            //         localStorage.setItem("allowed_items", JSON.stringify(allowed_items)); // Save updated allowed_items
+            //     } else {
+            //         console.log("Item code is already in allowed_items.");
+            //     }
+            // }
         });
     } else {
         alert("Unable to verify question completion, please submit on LeetCode again or try again later.");
