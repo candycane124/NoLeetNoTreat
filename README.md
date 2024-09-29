@@ -9,15 +9,15 @@ NoLeetNoTreat is a Chrome extension that intercepts users trying to make impulsi
 
 # See it in action:
 
-Create a Google Chrome Extension by uploading this code. 
+- [ ] Create a Google Chrome Extension by uploading this code. 
 
-Click on the Google Chrome Extension to hook-up your LeetCode account. 
+- [ ] Click on the Google Chrome Extension to hook-up your LeetCode account. 
 
-Go to some product (you've been meaning to buy) on Amazon and wait a few seconds for the page to fully load. 
+- [ ] Go to some product (you've been meaning to buy) on Amazon and wait a few seconds for the page to fully load. 
 
-Attempt to click "Add item to cart" only for your impulsive plan to be foiled!
+- [ ] Attempt to click "Add item to cart" only for your impulsive plan to be foiled!
 
-You must now solve a LeetCode question before you can buy your item!
+- [ ] Solve a LeetCode question before you can buy your item!
 
 Otherwise, No Leet No Treat!
 
