@@ -10,14 +10,18 @@
     "permissions": ["activeTab", "tabs", "sidePanel", "storage"], 
     "web_accessible_resources": [
     {
-      "resources": ["assets/slogan.gif"],
+      "resources": ["assets/slogan.gif", "assets/assets/Fredoka-VariableFont_wdth,wght.ttf"],
       "matches": ["<all_urls>"]
     }
-  ],
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
     "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
     ],
     "side_panel": {
