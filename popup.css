@@ -108,8 +108,14 @@ body {
     flex-direction: column;
   }
 
-  .linkAccount{
+  #logout{
+    cursor: pointer;
+  }
+
+  #linkAccount{
     width: 150px;
+    justify-content: center;
+    margin-left: 20%;
   }
 
   @font-face {
