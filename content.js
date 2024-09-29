@@ -70,7 +70,7 @@ function displayPopup(prompt, prompt2) {
               <p id="ai-response">Fetching a crazy sustainability fact...</p>
               <button id="open-code-button">I don't care</button>
               <p id="quote">Inspiration coming..</p>
-              <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:60%;" />
+              <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:70%;" />
               <br/>
               <button id="close-popup">Close</button>
               </div>

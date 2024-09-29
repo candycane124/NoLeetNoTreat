@@ -10,6 +10,7 @@
     justify-content: center;
     width: 400px;
     min-height: 600px;
+    border: 3px solid rgb(210, 154, 164);;
 
   }
 
@@ -30,10 +31,11 @@ h2{
 button {
     background-color: white;
     border: none;
-    border-radius: 30px;
-    padding: 15px 30px;
-    color: #f17eaa;
-    /* font-family: fred; */
+    border-radius: 10px;
+    padding: 10px 30px;
+    color: brown;
+    font-family: fred;
+    border: 2px solid rgb(210, 154, 164);;
   }
 
   
@@ -79,4 +81,9 @@ button {
 @font-face {
     font-family: 'fred';
     src: url('./assets/Fredoka-VariableFont_wdth\,wght.ttf');
+}
+
+@font-face {
+  font-family: fred;
+  src: url(./assets/Fredoka-VariableFont_wdth\,wght.ttf);
 }
