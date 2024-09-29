@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="./popup.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="popup.js"></script>
     <title>NoLeetNoTreat</title>
 </head>
 <body>
-    <div>
-        <div>NoLeetNoTreat</div>
+    <div class="navbar">
+        <p>learn more</p>
+        <p>settings</p>
+    </div>
+    <div class="container">
+        <img class="girl" src="./assets/girl.png"/>
+        <div class="header">No Leet, No Treat</div>
         <div id="login-status"></div>
         <div id="login">
             <h1>Link LeetCode Account</h1>
@@ -19,9 +25,12 @@
         </div>
 
         <script src="popup.js"></script>
-        <div>
-            <button id="code-button">Let's Code!</button>
+        <div class="button-container">
+            <button class="code-button" id="code-button">Let's Code!</button>
         </div>
+        <br />
+        <br />
+        Stop your impulse buying & level up your coding!
     </div>
 </body>
 </html>
