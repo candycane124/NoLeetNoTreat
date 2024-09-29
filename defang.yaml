@@ -1,0 +1,7 @@
+name: my-node-app
+version: '1.0'
+runtime: nodejs14 # or your preferred Node.js version
+entrypoint: server.js
+env:
+  - PORT: 3000
+  - API_KEY: AIzaSyDtveXq9xWYis9UqvRCMDyM8RiDFlYGcMM
