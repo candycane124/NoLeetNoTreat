@@ -30,12 +30,14 @@ displayCurrItem();
 
 function storeAll(json) {
     console.log("storing all q's");
-    allQs = json.problemsetQuestionList;
+    const allQs = json.problemsetQuestionList;
     console.log(allQs);
-    localStorage.setItem("allQs", allQs);
+    localStorage.setItem("allQs", JSON.stringify(allQs));
 }
 var allQs = localStorage.getItem("allQs");
-if (!allQs) {
+if (allQs) {
+    allQs = JSON.parse(allQs);
+} else {
     console.log("getting all problems");
     fetch(`${baseURL}/problems?limit=${maxQs}`)
         .then((response) => response.json())
@@ -54,12 +56,13 @@ if (!allQs) {
 async function findProblem() {
     let i = Math.floor(Math.random() * maxQs); //start at random question
     let diff = document.getElementById("difficulty").value;
-    let filter = diff != "None";
+    let noFilter = diff == "None";
     console.log("searching for problem, starting at", i);
+    console.log("here is all questions: ", allQs);
     while (i < 3300) {
         let q = allQs[i];
         console.log("checking if problem is suitable", q);
-        if (!filter || q.difficulty == diff) { //check difficulty match
+        if (noFilter || q.difficulty == diff) { //check difficulty match
             if (!q.isPaidOnly) { //check not paid only
                 const alreadySolved = await checkProblem(q.titleSlug);
                 if (!alreadySolved) { //check not solved recently
@@ -67,7 +70,7 @@ async function findProblem() {
                     break;
                 }
             }
-        }
+        } 
         i++;
     }
     if (i > 3300) {
