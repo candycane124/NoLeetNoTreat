@@ -62,6 +62,7 @@ function displayPopup(prompt, prompt2) {
               <img src="${chrome.runtime.getURL("assets/slogan.gif")}" alt="slogan" style="width:30%;" />
               <p>Sustainability facts from OpenAI on your purchase.</p>
               <p id="ai-response">Fetching sustainability facts...</p>
+              <button id="open-code-button">I don't care</button>
               <p>Here's your LeetCode Question!</p>
               <p id="quote">Inspiration coming..</p>
               <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:40%;" />
@@ -127,6 +128,15 @@ function displayPopup(prompt, prompt2) {
   document.getElementById("close-popup").onclick = () => {
     document.body.removeChild(overlay);
   };
+
+
+  document.getElementById("open-code-button").addEventListener("click", openCode);
+}
+
+function openCode() {
+  console.log("Requesting tab info");
+  // Send a message to the background script to open the side panel
+  chrome.runtime.sendMessage({ action: "openSidePanel" });
 }
 
 // Check if the DOM is already loaded
