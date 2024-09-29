@@ -28,6 +28,12 @@ body {
     color: white;
   }
 
+  button:hover {
+    background-color: #f17eaa;
+    color: white;
+    cursor: pointer;
+  }
+
   .navbar{
     display: flex;
     position: fixed;
@@ -69,6 +75,7 @@ body {
   
   .code-button:hover {
     background-color: rgb(255, 183, 195);
+    cursor: pointer;
   }
   
   .button-container {

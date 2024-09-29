@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="popup.js"></script>
     <title>NoLeetNoTreat</title>
-    <style>
-        #status {
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <div class="navbar">
@@ -19,13 +14,12 @@
     </div>
     <div class="container">
         <img class="girl" src="./assets/girl.png"/>
-        <h1 class="header">No Leet, No Treat</h1>
-        <div id="status"></div>
-        <div id="login" class="id">
-            <h1>Link LeetCode Account</h1>
+        <div class="header">No Leet, No Treat</div>
+        <div id="login-status"></div>
+        <div id="login">
+            <h1>Want to Check Total Problems Solved?</h1>
             <input type="text" id="leetcode-username" placeholder="Enter LeetCode Username">
-            <button id="linkAccount" class="linkAccount">Link Account</button>
-            <p id="status"></p>
+            <button id="linkAccount" class="linkAccount">Confirm</button>
         </div>
 
         <script src="popup.js"></script>
