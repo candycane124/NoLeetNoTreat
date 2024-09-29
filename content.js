@@ -3,7 +3,7 @@ console.log("Content script is running");
 var productTitle = "";
 
 function initialize() {
-  console.log("Okay here");
+  console.log("Okay here SLAYYY");
   setTimeout(() => {
     const payButton = document.querySelector(
       'input[name="submit.add-to-cart"]'
@@ -80,7 +80,7 @@ function displayPopup(prompt, prompt2) {
   document.body.appendChild(overlay);
 
   // Fetch data from the backend right after displaying the popup
-  fetch("http://localhost:3000/generate", {
+  fetch("https://m2zhang-app--3000.prod1.defang.dev/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -95,7 +95,7 @@ function displayPopup(prompt, prompt2) {
     .catch((error) => console.error("Error:", error));
 
   setTimeout(() => {
-    fetch("http://localhost:3000/generate", {
+    fetch("https://m2zhang-app--3000.prod1.defang.dev/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
