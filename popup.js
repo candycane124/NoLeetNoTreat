@@ -12,6 +12,7 @@ async function openCode() {
         if (chrome.sidePanel) {
             console.log("hey");
             chrome.sidePanel.open({ tabId: tab.id });
+            window.close();
         } else {
             chrome.tabs.create({ url: "./code.html"});
         }
