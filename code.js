@@ -23,7 +23,7 @@ function displayCurrItem() {
         localStorage.setItem("currItem", result.currItem);
     });
     var currItem = localStorage.getItem("currItem");
-    if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}!`;
+    if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}! Remember to log into your linked LeetCode account.`;
     else document.getElementById("instruction").innerHTML = `Practice your coding skills on LeetCode!`;    
 }
 displayCurrItem();
