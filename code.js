@@ -37,6 +37,7 @@ function storeAll(json) {
 var allQs = localStorage.getItem("allQs");
 if (allQs) {
     allQs = JSON.parse(allQs);
+    console.log("found all qs", allQs);
 } else {
     console.log("getting all problems");
     fetch(`${baseURL}/problems?limit=${maxQs}`)
@@ -95,9 +96,10 @@ function displayResults(json) {
     console.log("displaying results & setting currq!", currQuestion);
     let newText = `<div class='blurb'>Here is your question: ${currTitle}. Once you have an accepted submission, hit 'Get Credit' below! </div>`;
     document.getElementById("question").innerHTML = newText + json.question;
-    document.getElementById("completed").innerHTML = `<div class="blurb">Finished solving ${currTitle}?</div><button id="get-credit-button">Get Credit</button>`;
+    document.getElementById("completed").innerHTML = `<div class='blurb'>Finished solving ${currTitle}? </div> <button id="get-credit-button">Get Credit</button>`;
     console.log(json);
     chrome.tabs.create({ url: json.link});
+    
 }
 
 async function getCredit() {
@@ -152,8 +154,14 @@ async function getCredit() {
 }
 
 async function checkProblem(titleSlug) {
-    let url = `${baseURL}/${sessionStorage.getItem('username')}/acSubmission?limit=100`;
+    if (!localStorage.getItem('username')) {
+        alert("Please log into your LeetCode account first!");
+        return false;
+    }
+    let url = `${baseURL}/${localStorage.getItem('username')}/acSubmission?limit=100`;
     console.log("Checking if problem is solved:", titleSlug);
+    console.log("checking url", url);
+
     try {
         const response = await fetch(url);
         const json = await response.json();
