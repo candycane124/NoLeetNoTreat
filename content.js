@@ -1,5 +1,7 @@
 console.log("Content script is running");
 
+var productTitle = "";
+
 function initialize() {
   console.log("Okay here");
   setTimeout(() => {
@@ -10,7 +12,7 @@ function initialize() {
     const productTitleElement = document.getElementById("productTitle");
     const priceElement = document.querySelector(".a-price-whole");
 
-    const productTitle = productTitleElement
+    productTitle = productTitleElement
       ? productTitleElement.innerText.trim()
       : "Amazon Product";
 
@@ -22,7 +24,7 @@ function initialize() {
 
     const prompt = `I'm about to buy ${productTitle} that costs around ${productPrice} dollars. Give me a short and brief but strong sentence or two on why I shouldn't buy it, and tie in a sustainability fact, that uses some kind of statistic.`;
     const prompt2 =
-      "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
+      "I'm a woman trying to solve a hard (LeetCode) question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
 
     // Always show the popup first
     if (payButton) {
@@ -63,7 +65,7 @@ function displayPopup(prompt, prompt2) {
               <h2>Nice try...</h2>
               <img src="${chrome.runtime.getURL(
                 "assets/slogan.gif"
-              )}" alt="slogan" style="width:30%;" />
+              )}" alt="slogan" style="width:60%;" />
               <p>Sustainability alert!</p>
               <p id="ai-response">Fetching a crazy sustainability fact...</p>
               <button id="open-code-button">I don't care</button>
@@ -138,9 +140,10 @@ function displayPopup(prompt, prompt2) {
 }
 
 function openCode() {
-  console.log("Requesting tab info");
+  console.log("Requesting open side panel");
+  console.log("Item:", productTitle);
   // Send a message to the background script to open the side panel
-  chrome.runtime.sendMessage({ action: "openSidePanel" });
+  chrome.runtime.sendMessage({ action: "openSidePanel", item: productTitle });
 }
 
 function isItemAllowed(item_code) {
