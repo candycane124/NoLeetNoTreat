@@ -35,6 +35,10 @@ function initialize() {
 // Function to display the popup right away
 function displayPopup(prompt, prompt2) {
   const overlay = document.createElement("div");
+
+
+  overlay.id="overlay";
+
   overlay.style.position = "fixed";
   overlay.style.top = "0";
   overlay.style.left = "0";
@@ -47,11 +51,13 @@ function displayPopup(prompt, prompt2) {
   overlay.style.zIndex = "1000";
 
   const popup = document.createElement("div");
-  popup.style.backgroundColor = "#fff";
-  popup.style.padding = "20px";
+
+  popup.id="popup";
+
   popup.style.borderRadius = "8px";
   popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
   popup.innerHTML = `
+                <div class="container">
               <h2>Nice try...</h2>
               <img src="${chrome.runtime.getURL("assets/slogan.gif")}" alt="slogan" style="width:30%;" />
               <p>Sustainability facts from OpenAI on your purchase.</p>
@@ -59,7 +65,9 @@ function displayPopup(prompt, prompt2) {
               <p>Here's your LeetCode Question!</p>
               <p id="quote">Inspiration coming..</p>
               <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:40%;" />
+              <br/>
               <button id="close-popup">Close</button>
+              </div>
           `;
 
   overlay.appendChild(popup);

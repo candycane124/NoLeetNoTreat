@@ -1,99 +1,72 @@
-body {
+#popup {
     padding: 2rem;
     /* background-image: url('https://i.pinimg.com/564x/7a/f2/ae/7af2ae04d7112d6868c0733a629ec6ef.jpg'); */
     /* background-image: radial-gradient(rgba(139, 85, 139, 0.808), rgb(221, 207, 202)); */
     background-color: rgb(255, 215, 222);
     color: rgb(131, 18, 47);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 600px;
+
   }
-  
-.header {
-    color: #947258;
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgb(131, 18, 47);
-    font-size: 35px;
-    font-family: fred;
-    margin-bottom: 20px;
-  }
-  
-  button {
+
+#popup h2{
+    /* font-family: fred; */
+}
+#popup .container{
+    /* border: 2px solid orange; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    /* font-family: fred; */
+}
+button {
     background-color: white;
     border: none;
     border-radius: 30px;
     padding: 15px 30px;
     color: #f17eaa;
-    font-family: fred;
+    /* font-family: fred; */
   }
 
-  .navbar{
+  
+
+#popup .navbar{
     display: flex;
-    position: fixed;
+    flex-direction: column;
+    position: absolute;
     top: 0px;
-    left: 0px;
-    width: 100vw;
+    width: 500px;
+    height: 30px;
+    color:rgb(255, 215, 222);
     padding:  0px 30px;
     background-color: #804040;
   }
 
-  .navbar p{
+#popup .navbar p{
     margin-right: 20px;
     color:rgb(255, 215, 222);
-    font-family: fred;
+    /* font-family: fred; */
   }
   
-  .container {
-    width: 300px;
-    height: 450px;
-    /* border: 5px solid #e8b58a; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    /* background-color: #c9ff9447;
-    backdrop-filter: blur(3px); */
-    border-radius: 10px;
-  }
-  
-  .code-button {
+#close-popup {
     background-color: #804040;
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
   }
-  
-  .code-button:hover {
+
+#close-popup:hover{
     background-color: rgb(255, 183, 195);
-  }
+}
   
-  .button-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .girl{
-    width: 100px;
-    margin-bottom: 5px;
-  }
-
-  @font-face {
-    font-family: bubble;
-    src: url(./assets/RebellionSquad-ZpprZ.ttf);
-  }
-
-  @font-face {
-    font-family: bubble-block;
-    src: url(./assets/ThatSoundsGreat-yYLE3.ttf);
-  }
-
-  @font-face {
-    font-family: font1;
-    src: url(./assets/ChoretFudyngBubbleRegular-3zYPG.ttf);
-  }
-
-  @font-face {
-    font-family: font2;
-    src: url(./assets/SumbinPamfao-dr3nR.otf);
-  }
-
-  @font-face {
-    font-family: fred;
-    src: url(./assets/Fredoka-VariableFont_wdth\,wght.ttf);
-  }
+@font-face {
+    font-family: 'fred';
+    src: url('./assets/Fredoka-VariableFont_wdth\,wght.ttf');
+}
