@@ -63,7 +63,7 @@ function displayPopup(prompt, prompt2) {
               <h2>Nice try...</h2>
               <img src="${chrome.runtime.getURL(
                 "assets/slogan.gif"
-              )}" alt="slogan" style="width:30%;" />
+              )}" alt="slogan" style="width:60%;" />
               <p>Sustainability alert!</p>
               <p id="ai-response">Fetching a crazy sustainability fact...</p>
               <button id="open-code-button">I don't care</button>
