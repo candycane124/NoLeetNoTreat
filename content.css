@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 600px;
+    min-height: 600px;
 
   }
 
@@ -64,6 +64,16 @@ button {
 
 #close-popup:hover{
     background-color: rgb(255, 183, 195);
+}
+
+#open-code-button{
+  margin: 1px;
+  margin-bottom: 2%;
+}
+
+#open-code-button:hover{
+  background-color: rgb(234, 169, 179);
+  color: white;
 }
   
 @font-face {
