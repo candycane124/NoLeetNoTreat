@@ -39,6 +39,7 @@ document.getElementById('linkAccount').addEventListener('click', async () => {
 
     if (username) {
         // Store the username in Chrome storage for future use
+        
         chrome.storage.sync.set({ leetcodeUsername: username }, () => {
             document.getElementById('status').textContent = `LeetCode account linked: ${username}`;
         });
@@ -47,12 +48,21 @@ document.getElementById('linkAccount').addEventListener('click', async () => {
         const userData = await fetchLeetCodeUserData(username);
         console.log('User data:', userData);
 
-        // Update UI based on fetched data
-        document.getElementById('status').textContent += `\nFetched data: ${JSON.stringify(userData)}`;
+        if (userData) {
+            // Update UI based on fetched data
+            document.getElementById('login').innerHTML = '';
+            document.getElementById('login-status').innerHTML = `
+                <p>Welcome back ${username}!</p>
+                <p>Problems solved: ${userData.totalSolved}</p>
+            `;
+            // window.username = username;
+            localStorage.setItem('username', username);
+        } else {
+            document.getElementById('leetcode-username').innerHTML = ''; // Clear the input field
+            document.getElementById('login-status').textContent = 'Failed to fetch user';
+        }
     }
 });
-
-
 
 async function fetchLeetCodeUserData(username) {
     const apiUrl = `https://leetcode-stats-api.herokuapp.com/${username}`; // Example of unofficial LeetCode API

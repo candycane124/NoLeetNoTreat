@@ -1,4 +1,4 @@
-import { initBaseAuth } from '@propelauth/node';
+// import { initBaseAuth } from '@propelauth/node';
 
 require('dotenv').config();
 const express = require('express');
@@ -39,14 +39,14 @@ app.listen(port, () => {
 });
 
 
-const {
-    validateAccessTokenAndGetUser,
-    fetchUserMetadataByUserId,
-    // ...
-} = initBaseAuth({
-    authUrl: "https://72212551402.propelauthtest.com",
-    apiKey: "94ed30c903184a6f2d7db86ad5ef1f4026b3a52b278ee88d147e9df129c852d748243de598f832fd43f820b6b52bbcea", 
-});
+// const {
+//     validateAccessTokenAndGetUser,
+//     fetchUserMetadataByUserId,
+//     // ...
+// } = initBaseAuth({
+//     authUrl: "https://72212551402.propelauthtest.com",
+//     apiKey: "94ed30c903184a6f2d7db86ad5ef1f4026b3a52b278ee88d147e9df129c852d748243de598f832fd43f820b6b52bbcea", 
+// });
 
 app.get('/example', async (req, res) => {
     const authorizationHeader = req.headers['authorization'];
