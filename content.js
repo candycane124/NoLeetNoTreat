@@ -19,20 +19,21 @@ function initialize() {
     console.log(`Price: ${productPrice}`);
 
     const prompt = `I'm about to buy ${productTitle} that costs around ${productPrice} dollars. Give me a short and brief but strong sentence or two on why I shouldn't buy it, and tie in a sustainability fact, that uses some kind of statistic.`;
+    const prompt2 = "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
 
     // Always show the popup first
     if (payButton) {
       payButton.setAttribute("type", "button");
       payButton.onclick = (event) => {
         event.preventDefault();
-        displayPopup(prompt); // Pass the prompt to displayPopup
+        displayPopup(prompt, prompt2); // Pass the prompt to displayPopup
       };
     }
   }, 1500);
 }
 
 // Function to display the popup right away
-function displayPopup(prompt) {
+function displayPopup(prompt, prompt2) {
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
   overlay.style.top = "0";
@@ -64,9 +65,6 @@ function displayPopup(prompt) {
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
 
-  const prompt2 = "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
-
-
   // Fetch data from the backend right after displaying the popup
   fetch("http://localhost:3000/generate", {
       method: "POST",
@@ -82,19 +80,22 @@ function displayPopup(prompt) {
     })
     .catch((error) => console.error("Error:", error));
 
-    fetch("http://localhost:3000/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt2 }),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Generated content:", data.response);
-        addQuote(data.response); // Update the popup content
-      })
-      .catch((error) => console.error("Error:", error));
+    
+    setTimeout(() => {
+        fetch("http://localhost:3000/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ prompt2 }),
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Generated quote:", data.response);
+            addQuote(data.response);  
+          })
+          .catch((error) => console.error("Error:", error));
+      }, 5000);  
 
   // Function to update the popup content once the AI response is ready
   function updatePopupContent(responseText) {
@@ -109,8 +110,9 @@ function displayPopup(prompt) {
   function addQuote(responseText) {
     const quoteElement = document.getElementById("quote");
     if (quoteElement) {
-        quoteElement.innerHTML = responseText;
-      console.log("Added quote");
+        quoteElement.innerHTML = responseText
+        ? responseText: "Don't be afraid to ask for help, but don't be afraid to think for yourself. - Marissa Mayer";
+      console.log(`Added quote with text: ${responseText}`);
     }
   }
 
