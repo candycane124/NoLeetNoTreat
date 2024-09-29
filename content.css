@@ -87,3 +87,15 @@ button {
   font-family: fred;
   src: url(./assets/Fredoka-VariableFont_wdth\,wght.ttf);
 }
+
+
+#ai-response{
+  padding: 1rem;
+  background-color: #804040;
+  color: white;
+  border-radius: 10px;
+}
+
+#quote{
+  margin-top: 8px;
+}
