@@ -19,21 +19,20 @@ function initialize() {
     console.log(`Price: ${productPrice}`);
 
     const prompt = `I'm about to buy ${productTitle} that costs around ${productPrice} dollars. Give me a short and brief but strong sentence or two on why I shouldn't buy it, and tie in a sustainability fact, that uses some kind of statistic.`;
-    const prompt2 = "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
 
     // Always show the popup first
     if (payButton) {
       payButton.setAttribute("type", "button");
       payButton.onclick = (event) => {
         event.preventDefault();
-        displayPopup(prompt, prompt2); // Pass the prompt to displayPopup
+        displayPopup(prompt); // Pass the prompt to displayPopup
       };
     }
   }, 1500);
 }
 
 // Function to display the popup right away
-function displayPopup(prompt, prompt2) {
+function displayPopup(prompt) {
   const overlay = document.createElement("div");
 
 
@@ -59,10 +58,10 @@ function displayPopup(prompt, prompt2) {
   popup.innerHTML = `
                 <div class="container">
               <h2>Nice try...</h2>
-              <img src="${chrome.runtime.getURL("assets/slogan.gif")}" alt="slogan" style="width:60%;" />
+              <img src="${chrome.runtime.getURL("assets/slogan.gif")}" alt="slogan" style="width:30%;" />
               <p>Sustainability facts from OpenAI on your purchase.</p>
               <p id="ai-response">Fetching sustainability facts...</p>
-              <button id="open-code-button">I don't care</button>
+              <p>Here's your LeetCode Question!</p>
               <p id="quote">Inspiration coming..</p>
               <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:40%;" />
               <br/>
@@ -72,6 +71,9 @@ function displayPopup(prompt, prompt2) {
 
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
+
+  const prompt2 = "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
+
 
   // Fetch data from the backend right after displaying the popup
   fetch("http://localhost:3000/generate", {
@@ -83,27 +85,24 @@ function displayPopup(prompt, prompt2) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Generated content:", data);
+      console.log("Generated content:", data.response);
       updatePopupContent(data.response); // Update the popup content
     })
     .catch((error) => console.error("Error:", error));
 
-    
-    setTimeout(() => {
-        fetch("http://localhost:3000/generate", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ prompt2 }),
-          })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Generated quote:", data.response);
-            addQuote(data.response);  
-          })
-          .catch((error) => console.error("Error:", error));
-      }, 5000);  
+    fetch("http://localhost:3000/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt2 }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Generated content:", data.response);
+        addQuote(data.response); // Update the popup content
+      })
+      .catch((error) => console.error("Error:", error));
 
   // Function to update the popup content once the AI response is ready
   function updatePopupContent(responseText) {
@@ -118,23 +117,14 @@ function displayPopup(prompt, prompt2) {
   function addQuote(responseText) {
     const quoteElement = document.getElementById("quote");
     if (quoteElement) {
-        quoteElement.innerHTML = responseText
-        ? responseText: "Don't be afraid to ask for help, but don't be afraid to think for yourself. - Marissa Mayer";
-      console.log(`Added quote with text: ${responseText}`);
+        quoteElement.innerHTML = responseText;
+      console.log("Added quote");
     }
   }
 
   document.getElementById("close-popup").onclick = () => {
     document.body.removeChild(overlay);
   };
-
-  document.getElementById("open-code-button").addEventListener("click", openCode);
-}
-
-function openCode() {
-  console.log("Requesting tab info");
-  // Send a message to the background script to open the side panel
-  chrome.runtime.sendMessage({ action: "openSidePanel" });
 }
 
 // Check if the DOM is already loaded
