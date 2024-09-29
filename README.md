@@ -15,9 +15,9 @@ Before they can proceed to checkout, they must complete a LeetCode problem. This
 
 # See it in action:
 
-- [ ] Create a Google Chrome Extension and upload this repository code. 
+- [ ] Create a Google Chrome Extension and upload this repository code. For more information regarding Chrome Extensions, read this documentation: https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked.
 
-- [ ] Click on the Google Chrome Extension to hook-up your LeetCode account. 
+- [ ] Click on the Google Chrome Extension icon and enter your Leetcode username to hook-up your LeetCode account. 
 
 - [ ] Go to some product (you've been meaning to buy) on Amazon and wait a few seconds for the page to fully load. (Ponder over the opportunity costs and hte true weights of your potentially impulsive decision.)
 

@@ -12,6 +12,7 @@ async function openCode() {
         if (chrome.sidePanel) {
             console.log("hey");
             chrome.sidePanel.open({ tabId: tab.id });
+            window.close();
         } else {
             chrome.tabs.create({ url: "./code.html"});
         }
@@ -91,7 +92,6 @@ document.getElementById('linkAccount').addEventListener('click', async () => {
                 <p>Welcome back ${username}!</p>
                 <p>Problems solved: ${userData.totalSolved}</p>
             `;
-            // window.username = username;
             localStorage.setItem('username', username);
         } else {
             document.getElementById('leetcode-username').innerHTML = ''; // Clear the input field

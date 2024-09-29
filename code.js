@@ -1,6 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     document.getElementById("get-daily-button").addEventListener("click", findDaily);
-// });
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("get-problem-button").addEventListener("click", findProblem);
 });
@@ -23,7 +20,7 @@ function displayCurrItem() {
         localStorage.setItem("currItem", result.currItem);
     });
     var currItem = localStorage.getItem("currItem");
-    if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}! Remember to log into your linked LeetCode account.`;
+    if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}! \n Remember to log into your linked LeetCode account.`;
     else document.getElementById("instruction").innerHTML = `Practice your coding skills on LeetCode!`;    
 }
 displayCurrItem();
@@ -37,6 +34,7 @@ function storeAll(json) {
 var allQs = localStorage.getItem("allQs");
 if (allQs) {
     allQs = JSON.parse(allQs);
+    console.log("found all qs", allQs);
 } else {
     console.log("getting all problems");
     fetch(`${baseURL}/problems?limit=${maxQs}`)
@@ -44,14 +42,6 @@ if (allQs) {
         .then((json) => storeAll(json))
         .catch((error) => console.error(`Error storing data: ${error.message}`));
 }
-
-// function findDaily() {
-//     let url = `${baseURL}/daily`;
-//     fetch(url)
-//         .then((response) => response.json())
-//         .then((json) => getProblem(json.titleSlug))
-//         .catch((error) => console.error(`Error fetching data: ${error.message}`));
-// }
 
 async function findProblem() {
     let i = Math.floor(Math.random() * maxQs); //start at random question
@@ -76,7 +66,6 @@ async function findProblem() {
     if (i > 3300) {
         alert("Error occured while searching for problem, please try again.");
     }
-    // getProblem("two-sum");
 }
 
 function getProblem(titleSlug) {
@@ -95,9 +84,10 @@ function displayResults(json) {
     console.log("displaying results & setting currq!", currQuestion);
     let newText = `<div class='blurb'>Here is your question: ${currTitle}. Once you have an accepted submission, hit 'Get Credit' below! </div>`;
     document.getElementById("question").innerHTML = newText + json.question;
-    document.getElementById("completed").innerHTML = `<div class="blurb">Finished solving ${currTitle}?</div><button id="get-credit-button">Get Credit</button>`;
+    document.getElementById("completed").innerHTML = `<div class='blurb'>Finished solving ${currTitle}? </div> <button id="get-credit-button">Get Credit</button>`;
     console.log(json);
     chrome.tabs.create({ url: json.link});
+    
 }
 
 async function getCredit() {
@@ -128,23 +118,6 @@ async function getCredit() {
                     console.log("Item code is already in allowed_items.");
                 }
             });
-
-
-            // if (!localStorage.getItem("allowed_items")) {
-            //     // If no allowed_items, create it with the item_code
-            //     localStorage.setItem("allowed_items", JSON.stringify({ item_codes: [item_code] }));
-            // } else {
-            //     // Parse the existing allowed_items from localStorage
-            //     const allowed_items = JSON.parse(localStorage.getItem("allowed_items"));
-
-            //     // Check if item_code is already in allowed_items
-            //     if (!allowed_items.item_codes.includes(item_code)) {
-            //         allowed_items.item_codes.push(item_code); // Add new item_code to the array
-            //         localStorage.setItem("allowed_items", JSON.stringify(allowed_items)); // Save updated allowed_items
-            //     } else {
-            //         console.log("Item code is already in allowed_items.");
-            //     }
-            // }
         });
     } else {
         alert("Unable to verify question completion, please submit on LeetCode again or try again later.");
@@ -152,9 +125,14 @@ async function getCredit() {
 }
 
 async function checkProblem(titleSlug) {
-    let url = `${baseURL}/${localStorage.getItem('username')}/acSubmission?limit=20`;
+    if (!localStorage.getItem('username')) {
+        alert("Please log into your LeetCode account first!");
+        return false;
+    }
+    let url = `${baseURL}/${localStorage.getItem('username')}/acSubmission?limit=100`;
     console.log("Checking if problem is solved:", titleSlug);
-    console.log(url);
+    console.log("checking url", url);
+
     try {
         const response = await fetch(url);
         const json = await response.json();

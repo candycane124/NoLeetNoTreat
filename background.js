@@ -11,8 +11,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "openSidePanel") {
       console.log("Received request to open side panel");
 
-      // localStorage.setItem("currItem", message.item);
-
       chrome.storage.local.set({ currItem: message.item }, function() {
         console.log("Stored in extension storage:", message.item);
       });
