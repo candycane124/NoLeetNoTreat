@@ -84,15 +84,41 @@ function displayResults(json) {
 async function getCredit() {
     const problemSolved = await checkProblem(currQuestion);
     if (problemSolved) {
-        alert("user completed the question, allow user to buy item");
+        alert("Congratulations, you've completed the LeetCode Questoins! Return to get your Treat ;)");
+
+        // Retrieve item_code from chrome storage
+        chrome.storage.local.get("item_code", function(result) {
+            const item_code = result.item_code; // Get the stored item_code
+            if (!item_code) {
+                console.error("No item_code found in storage.");
+                return;  
+            }
+
+            // Check if allowed_items exists in localStorage
+            if (!localStorage.getItem("allowed_items")) {
+                // If no allowed_items, create it with the item_code
+                localStorage.setItem("allowed_items", JSON.stringify({ item_codes: [item_code] }));
+            } else {
+                // Parse the existing allowed_items from localStorage
+                const allowed_items = JSON.parse(localStorage.getItem("allowed_items"));
+
+                // Check if item_code is already in allowed_items
+                if (!allowed_items.item_codes.includes(item_code)) {
+                    allowed_items.item_codes.push(item_code); // Add new item_code to the array
+                    localStorage.setItem("allowed_items", JSON.stringify(allowed_items)); // Save updated allowed_items
+                } else {
+                    console.log("Item code is already in allowed_items.");
+                }
+            }
+        });
     } else {
-        alert("unable to verify question completion, please submit on leetcode again");
+        alert("Unable to verify question completion, please submit on LeetCode again.");
     }
 }
 
 async function checkProblem(titleSlug) {
     let url = `${baseURL}/${sessionStorage.getItem('username')}/acSubmission?limit=100`;
-    console.log("checking if problem is solved:", titleSlug);
+    console.log("Checking if problem is solved:", titleSlug);
     try {
         const response = await fetch(url);
         const json = await response.json();
