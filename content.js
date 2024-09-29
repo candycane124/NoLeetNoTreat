@@ -24,7 +24,7 @@ function initialize() {
 
     const prompt = `I'm about to buy ${productTitle} that costs around ${productPrice} dollars. Give me a short and brief but strong sentence or two on why I shouldn't buy it, and tie in a sustainability fact, that uses some kind of statistic.`;
     const prompt2 =
-      "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
+      "I'm a woman trying to solve a hard (LeetCode) question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
 
     // Always show the popup first
     if (payButton) {
