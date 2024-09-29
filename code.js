@@ -16,19 +16,28 @@ var currTitle = localStorage.getItem("currTitle");
 if (!currQuestion) currQuestion = "";
 if (currTitle) document.getElementById("completed").innerHTML = `<div class="blurb">Finished solving ${currTitle}?</div><button id="get-credit-button">Get Credit</button>`;
 else currTitle = "";
+chrome.storage.local.get("currItem", function(result) {
+    console.log("Retrieved from extension storage:", result.currItem);
+    localStorage.setItem("currItem", result.currItem);
+});
+var currItem = localStorage.getItem("currItem");
+if (currItem) document.getElementById("instruction").innerHTML = `Complete a LeetCode problem before you buy ${currItem}!`;
+else document.getElementById("instruction").innerHTML = `Practice your coding skills on LeetCode!`;
 
-
-var allQs = [];
 function storeAll(json) {
     console.log("storing all q's");
     allQs = json.problemsetQuestionList;
     console.log(allQs);
+    localStorage.setItem("allQs", allQs);
 }
-console.log("getting all problems");
-fetch(`${baseURL}/problems?limit=${maxQs}`)
-    .then((response) => response.json())
-    .then((json) => storeAll(json))
-    .catch((error) => console.error(`Error storing data: ${error.message}`));
+var allQs = localStorage.getItem("allQs");
+if (!allQs) {
+    console.log("getting all problems");
+    fetch(`${baseURL}/problems?limit=${maxQs}`)
+        .then((response) => response.json())
+        .then((json) => storeAll(json))
+        .catch((error) => console.error(`Error storing data: ${error.message}`));
+}
 
 // function findDaily() {
 //     let url = `${baseURL}/daily`;
@@ -39,25 +48,28 @@ fetch(`${baseURL}/problems?limit=${maxQs}`)
 // }
 
 async function findProblem() {
-    let i = Math.floor(Math.random() * maxQs); //start at random question
-    let diff = document.getElementById("difficulty").value;
-    let filter = diff != "None";
-    console.log("searching for problem, starting at", i);
-    while (i < 3300) {
-        let q = allQs[i];
-        console.log("checking if problem is suitable", q);
-        if (!filter || q.difficulty == diff) { //check difficulty match
-            const alreadySolved = await checkProblem(q.titleSlug);
-            if (!q.isPaidOnly && !alreadySolved) { //check not paid & not solved recently
-                getProblem(q.titleSlug);
-                break;
-            }
-        }
-        i++;
-    }
-    if (i > 3300) {
-        alert("Error occured while searching for problem, please try again.");
-    }
+    // let i = Math.floor(Math.random() * maxQs); //start at random question
+    // let diff = document.getElementById("difficulty").value;
+    // let filter = diff != "None";
+    // console.log("searching for problem, starting at", i);
+    // while (i < 3300) {
+    //     let q = allQs[i];
+    //     console.log("checking if problem is suitable", q);
+    //     if (!filter || q.difficulty == diff) { //check difficulty match
+    //         if (!q.isPaidOnly) { //check not paid only
+    //             const alreadySolved = await checkProblem(q.titleSlug);
+    //             if (!alreadySolved) { //check not solved recently
+    //                 getProblem(q.titleSlug);
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     i++;
+    // }
+    // if (i > 3300) {
+    //     alert("Error occured while searching for problem, please try again.");
+    // }
+    getProblem("two-sum");
 }
 
 function getProblem(titleSlug) {
@@ -112,7 +124,7 @@ async function getCredit() {
             }
         });
     } else {
-        alert("Unable to verify question completion, please submit on LeetCode again.");
+        alert("Unable to verify question completion, please submit on LeetCode again or try again later.");
     }
 }
 
