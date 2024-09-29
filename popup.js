@@ -91,7 +91,6 @@ document.getElementById('linkAccount').addEventListener('click', async () => {
                 <p>Welcome back ${username}!</p>
                 <p>Problems solved: ${userData.totalSolved}</p>
             `;
-            // window.username = username;
             localStorage.setItem('username', username);
         } else {
             document.getElementById('leetcode-username').innerHTML = ''; // Clear the input field

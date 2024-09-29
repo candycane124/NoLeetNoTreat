@@ -96,24 +96,6 @@ function displayPopup(prompt, prompt2) {
 
   console.log(`here's prompt2: ${prompt2}`);
 
-  /* 
-  setTimeout(() => {
-    fetch("http://localhost:3000/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prompt2 }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Generated quote:", data.response);
-        addQuote(data.response);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, 3000);
-  */
-
   // Function to update the popup content once the AI response is ready
   function updatePopupContent(responseText) {
     const aiResponseElement = document.getElementById("ai-response");
@@ -124,7 +106,6 @@ function displayPopup(prompt, prompt2) {
   }
 
   // Function to update the popup content once the AI response is ready
-  // function addQuote(responseText) {
   setTimeout(() => {
     const quoteElement = document.getElementById("quote");
     if (quoteElement) {
@@ -149,10 +130,6 @@ function openCode() {
 }
 
 function isItemAllowed(item_code) {
-  // const allowedItems = JSON.parse(localStorage.getItem("allowed_items")) || {
-  //   item_codes: [],
-  // };
-  // return allowedItems.item_codes.includes(item_code);
   return new Promise((resolve) => {
     chrome.storage.local.get("allowed_items", function (data) {
       const allowedItems = data.allowed_items || { item_codes: [] };

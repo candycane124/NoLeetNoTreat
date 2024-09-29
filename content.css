@@ -1,7 +1,5 @@
 #popup {
     padding: 2rem;
-    /* background-image: url('https://i.pinimg.com/564x/7a/f2/ae/7af2ae04d7112d6868c0733a629ec6ef.jpg'); */
-    /* background-image: radial-gradient(rgba(139, 85, 139, 0.808), rgb(221, 207, 202)); */
     background-color: rgb(255, 215, 222);
     color: rgb(131, 18, 47);
     display: flex;
@@ -14,20 +12,13 @@
 
   }
 
-#popup h2{
-    /* font-family: fred; */
-}
 #popup .container{
-    /* border: 2px solid orange; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-h2{
-    /* font-family: fred; */
-}
 button {
     background-color: white;
     border: none;
@@ -55,7 +46,6 @@ button {
 #popup .navbar p{
     margin-right: 20px;
     color:rgb(255, 215, 222);
-    /* font-family: fred; */
   }
   
 #close-popup {

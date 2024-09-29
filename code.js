@@ -1,6 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     document.getElementById("get-daily-button").addEventListener("click", findDaily);
-// });
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("get-problem-button").addEventListener("click", findProblem);
 });
@@ -46,14 +43,6 @@ if (allQs) {
         .catch((error) => console.error(`Error storing data: ${error.message}`));
 }
 
-// function findDaily() {
-//     let url = `${baseURL}/daily`;
-//     fetch(url)
-//         .then((response) => response.json())
-//         .then((json) => getProblem(json.titleSlug))
-//         .catch((error) => console.error(`Error fetching data: ${error.message}`));
-// }
-
 async function findProblem() {
     let i = Math.floor(Math.random() * maxQs); //start at random question
     let diff = document.getElementById("difficulty").value;
@@ -77,7 +66,6 @@ async function findProblem() {
     if (i > 3300) {
         alert("Error occured while searching for problem, please try again.");
     }
-    // getProblem("two-sum");
 }
 
 function getProblem(titleSlug) {
@@ -130,23 +118,6 @@ async function getCredit() {
                     console.log("Item code is already in allowed_items.");
                 }
             });
-
-
-            // if (!localStorage.getItem("allowed_items")) {
-            //     // If no allowed_items, create it with the item_code
-            //     localStorage.setItem("allowed_items", JSON.stringify({ item_codes: [item_code] }));
-            // } else {
-            //     // Parse the existing allowed_items from localStorage
-            //     const allowed_items = JSON.parse(localStorage.getItem("allowed_items"));
-
-            //     // Check if item_code is already in allowed_items
-            //     if (!allowed_items.item_codes.includes(item_code)) {
-            //         allowed_items.item_codes.push(item_code); // Add new item_code to the array
-            //         localStorage.setItem("allowed_items", JSON.stringify(allowed_items)); // Save updated allowed_items
-            //     } else {
-            //         console.log("Item code is already in allowed_items.");
-            //     }
-            // }
         });
     } else {
         alert("Unable to verify question completion, please submit on LeetCode again or try again later.");

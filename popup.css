@@ -1,7 +1,5 @@
 body {
     padding: 2rem;
-    /* background-image: url('https://i.pinimg.com/564x/7a/f2/ae/7af2ae04d7112d6868c0733a629ec6ef.jpg'); */
-    /* background-image: radial-gradient(rgba(139, 85, 139, 0.808), rgb(221, 207, 202)); */
     background-color: rgb(255, 215, 222);
     color: rgb(131, 18, 47);
   }
@@ -59,14 +57,11 @@ body {
   .container {
     width: 180px;
     height: 360px;
-    /* border: 5px solid #e8b58a; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    /* background-color: #c9ff9447;
-    backdrop-filter: blur(3px); */
     border-radius: 10px;
     font-family: fred;
   }
@@ -85,7 +80,6 @@ body {
     cursor: pointer;
   }
   .test{
-    /* border: 2px solid black; */
     width: 100%;
     display: flex;
     align-items: center;
