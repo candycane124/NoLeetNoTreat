@@ -3,7 +3,13 @@
     "@google/generative-ai": "^0.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "@propelauth/node": "^2.1.22",
+    "@propelauth/react": "^2.0.22",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.10"
   },
   "name": "noleetnotreat",
   "version": "1.0.0",
@@ -16,15 +22,4 @@
   "keywords": [],
   "author": "",
   "license": "ISC"
-}
-
-{
-  "dependencies": {
-    "@propelauth/node": "^2.1.22",
-    "@propelauth/react": "^2.0.22",
-    "react": "^18.3.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.10"
-  }
 }

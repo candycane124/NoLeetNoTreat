@@ -10,7 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const baseURL = "https://alfa-leetcode-api.onrender.com";
 const maxQs = 3300;
-var currQuestion = "";
+
+var currQuestion = localStorage.getItem("currTitleSlug");
+var currTitle = localStorage.getItem("currTitle");
+if (!currQuestion) currQuestion = "";
+if (currTitle) document.getElementById("completed").innerHTML = `<div class="blurb">Finished solving ${currTitle}?</div><button id="get-credit-button">Get Credit</button>`;
+else currTitle = "";
+
+
 var allQs = [];
 function storeAll(json) {
     console.log("storing all q's");
@@ -29,25 +36,6 @@ fetch(`${baseURL}/problems?limit=${maxQs}`)
 //         .then((response) => response.json())
 //         .then((json) => getProblem(json.titleSlug))
 //         .catch((error) => console.error(`Error fetching data: ${error.message}`));
-// }
-
-// function findProblem() {
-//     let url = `${baseURL}/problems`;
-//     let diff = document.getElementById("difficulty").value;
-//     let filter = diff != "None";
-//     console.log("finding problem of diff: ", diff);
-//     fetch(url)
-//         .then((response) => response.json())
-//         .then((json) => {
-//             for (const q of json.problemsetQuestionList) {
-//                 if (!filter || q.difficulty == diff) {
-//                     console.log("found appropriate, getting: ", q.titleSlug);
-//                     getProblem(q.titleSlug);
-//                     break;
-//                 }
-//             }
-//         })
-//         .catch((error) => console.error(`Error finding data: ${error.message}`));
 // }
 
 async function findProblem() {
@@ -82,8 +70,13 @@ function getProblem(titleSlug) {
 
 function displayResults(json) {
     currQuestion = json.titleSlug;
+    currTitle = json.questionTitle;
+    localStorage.setItem("currTitleSlug", currQuestion);
+    localStorage.setItem("currTitle", currTitle);
     console.log("displaying results & setting currq!", currQuestion);
-    document.getElementById("question").innerHTML = json.question;
+    let newText = `<div class='blurb'>Here is your question: ${currTitle}. Once you have an accepted submission, hit 'Get Credit' below! </div>`;
+    document.getElementById("question").innerHTML = newText + json.question;
+    document.getElementById("completed").innerHTML = `<div class="blurb">Finished solving ${currTitle}?</div><button id="get-credit-button">Get Credit</button>`;
     console.log(json);
     chrome.tabs.create({ url: json.link});
 }

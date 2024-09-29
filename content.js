@@ -62,6 +62,7 @@ function displayPopup(prompt) {
               <p>Sustainability facts from OpenAI on your purchase.</p>
               <p id="ai-response">Fetching sustainability facts...</p>
               <p>Here's your LeetCode Question!</p>
+              <p id="quote">Inspiration coming..</p>
               <img src="https://media.tenor.com/cXUxKfB1aCkAAAAi/no-nope.gif" alt="No Nope Sticker" style="width:40%;" />
               <br/>
               <button id="close-popup">Close</button>
@@ -70,6 +71,9 @@ function displayPopup(prompt) {
 
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
+
+  const prompt2 = "I'm a woman trying to solve a hard (LeetCode)question, give me an inspirational quote from some women tech leader to solve it! Just the quote.";
+
 
   // Fetch data from the backend right after displaying the popup
   fetch("http://localhost:3000/generate", {
@@ -86,12 +90,35 @@ function displayPopup(prompt) {
     })
     .catch((error) => console.error("Error:", error));
 
+    fetch("http://localhost:3000/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt2 }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Generated content:", data.response);
+        addQuote(data.response); // Update the popup content
+      })
+      .catch((error) => console.error("Error:", error));
+
   // Function to update the popup content once the AI response is ready
   function updatePopupContent(responseText) {
     const aiResponseElement = document.getElementById("ai-response");
     if (aiResponseElement) {
       aiResponseElement.innerHTML = responseText;
-      console.log("Supposedly replaced text");
+      console.log("Replaced text with sustainability fact");
+    }
+  }
+
+  // Function to update the popup content once the AI response is ready
+  function addQuote(responseText) {
+    const quoteElement = document.getElementById("quote");
+    if (quoteElement) {
+        quoteElement.innerHTML = responseText;
+      console.log("Added quote");
     }
   }
 
