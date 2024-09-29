@@ -147,10 +147,16 @@ function openCode() {
 }
 
 function isItemAllowed(item_code) {
-  const allowedItems = JSON.parse(localStorage.getItem("allowed_items")) || {
-    item_codes: [],
-  };
-  return allowedItems.item_codes.includes(item_code);
+  // const allowedItems = JSON.parse(localStorage.getItem("allowed_items")) || {
+  //   item_codes: [],
+  // };
+  // return allowedItems.item_codes.includes(item_code);
+  return new Promise((resolve) => {
+    chrome.storage.local.get("allowed_items", function(data) {
+      const allowedItems = data.allowed_items || { item_codes: [] };
+      resolve(allowedItems.item_codes.includes(item_code));
+    });
+  });
 }
 
 function getSpanWith10Chars() {
@@ -190,10 +196,13 @@ if (document.readyState === "loading") {
     const item_code = item_code_span.textContent; // Extract the text content (item code)
 
     // If item is not allowed, initialize
-    if (!isItemAllowed(item_code)) {
-      storeItemCodeInChromeStorage(item_code);
-      document.addEventListener("DOMContentLoaded", initialize);
-    }
+    console.log(item_code);
+    isItemAllowed(item_code).then((isAllowed) => {
+      if (!isAllowed) {
+        storeItemCodeInChromeStorage(item_code);
+        initialize();
+      }
+    });
   }
 } else {
   const item_code_span = getSpanWith10Chars();
@@ -202,10 +211,12 @@ if (document.readyState === "loading") {
     const item_code = item_code_span.textContent; // Extract the text content (item code)
 
     // If item is not allowed, initialize
-    if (!isItemAllowed(item_code)) {
-      storeItemCodeInChromeStorage(item_code);
-      console.log(`${item_code}`);
-      initialize();
-    }
+    console.log(item_code);
+    isItemAllowed(item_code).then((isAllowed) => {
+      if (!isAllowed) {
+        storeItemCodeInChromeStorage(item_code);
+        initialize();
+      }
+    });
   }
 }
