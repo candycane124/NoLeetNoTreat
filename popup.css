@@ -56,12 +56,12 @@ body {
   
   .container {
     width: 180px;
-    height: 360px;
+    height: 420px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 10px;
     font-family: fred;
   }
