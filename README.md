@@ -1,7 +1,7 @@
 # NoLeetNoTreat
 
 # Inspiration:
-Do you ever think about how much junk you have cluttered or never wear? Have you been avoiding your LeetCode practice as of late? Look no further, NoLeetNoTreat tackles the challenges towards sustainability and entry into tech (especially as a women)!
+Do you ever think about how much junk clutters your home, that you never use/wear? Have you been avoiding your LeetCode practice as of late? Look no further, NoLeetNoTreat tackles the challenges towards sustainability and entry into tech (especially as a women)!
 
 Impulse buying has become a common problem in the digital age, with users often making purchases they later regret.
 We wanted to create a solution that merges productivity with responsible shopping, leveraging coding challenges to give users a pause before they make unnecessary purchases.
