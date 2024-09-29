@@ -57,8 +57,8 @@ body {
   }
   
   .container {
-    width: 300px;
-    height: 450px;
+    width: 180px;
+    height: 360px;
     /* border: 5px solid #e8b58a; */
     display: flex;
     flex-direction: column;

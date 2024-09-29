@@ -80,7 +80,7 @@ function displayPopup(prompt, prompt2) {
   document.body.appendChild(overlay);
 
   // Fetch data from the backend right after displaying the popup
-  fetch("http://localhost:3000/generate", {
+  fetch("https://m2zhang-app--3000.prod1.defang.dev/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -94,6 +94,9 @@ function displayPopup(prompt, prompt2) {
     })
     .catch((error) => console.error("Error:", error));
 
+  console.log(`here's prompt2: ${prompt2}`);
+
+  /* 
   setTimeout(() => {
     fetch("http://localhost:3000/generate", {
       method: "POST",
@@ -109,6 +112,7 @@ function displayPopup(prompt, prompt2) {
       })
       .catch((error) => console.error("Error:", error));
   }, 3000);
+  */
 
   // Function to update the popup content once the AI response is ready
   function updatePopupContent(responseText) {
@@ -120,15 +124,13 @@ function displayPopup(prompt, prompt2) {
   }
 
   // Function to update the popup content once the AI response is ready
-  function addQuote(responseText) {
+  // function addQuote(responseText) {
+  setTimeout(() => {
     const quoteElement = document.getElementById("quote");
     if (quoteElement) {
-      quoteElement.innerHTML = responseText
-        ? responseText
-        : "Don't be afraid to ask for help, but don't be afraid to think for yourself. - Marissa Mayer";
-      console.log(`Added quote with text: ${responseText}`);
+      quoteElement.innerHTML = "Don't be afraid to ask for help, but don't be afraid to think for yourself. - Marissa Mayer";
     }
-  }
+  }, 4000);
 
   document.getElementById("close-popup").onclick = () => {
     document.body.removeChild(overlay);
@@ -152,7 +154,7 @@ function isItemAllowed(item_code) {
   // };
   // return allowedItems.item_codes.includes(item_code);
   return new Promise((resolve) => {
-    chrome.storage.local.get("allowed_items", function(data) {
+    chrome.storage.local.get("allowed_items", function (data) {
       const allowedItems = data.allowed_items || { item_codes: [] };
       resolve(allowedItems.item_codes.includes(item_code));
     });
@@ -160,18 +162,18 @@ function isItemAllowed(item_code) {
 }
 
 function getSpanWith10Chars() {
-    const spans = document.querySelectorAll("span"); // Select all span elements
-    const regex = /^B.*\d.*$/; // Regular expression to check if string starts with 'B' and contains at least one number
-    
-    for (let span of spans) {
-      const text = span.textContent;
-      if (text.length === 10 && regex.test(text)) {
-        // Check if the span text is exactly 10 characters, starts with 'B', and contains at least one number
-        return span;
-      }
+  const spans = document.querySelectorAll("span"); // Select all span elements
+  const regex = /^B.*\d.*$/; // Regular expression to check if string starts with 'B' and contains at least one number
+
+  for (let span of spans) {
+    const text = span.textContent;
+    if (text.length === 10 && regex.test(text)) {
+      // Check if the span text is exactly 10 characters, starts with 'B', and contains at least one number
+      return span;
     }
-    return null; // Return null if no matching span is found
   }
+  return null; // Return null if no matching span is found
+}
 
 function sendItemCodeToBackground(item_code) {
   chrome.runtime.sendMessage(
