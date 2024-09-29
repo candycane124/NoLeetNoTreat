@@ -91,7 +91,7 @@ async function getCredit() {
 }
 
 async function checkProblem(titleSlug) {
-    let url = `${baseURL}/${username}/acSubmission?limit=100`;
+    let url = `${baseURL}/${sessionStorage.getItem('username')}/acSubmission?limit=100`;
     console.log("checking if problem is solved:", titleSlug);
     try {
         const response = await fetch(url);

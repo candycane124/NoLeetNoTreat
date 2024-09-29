@@ -48,7 +48,7 @@ document.getElementById('linkAccount').addEventListener('click', async () => {
         const userData = await fetchLeetCodeUserData(username);
         console.log('User data:', userData);
 
-        if (userData) {
+        if (userData || username !== null) {
             // Update UI based on fetched data
             document.getElementById('login').innerHTML = '';
             document.getElementById('login-status').innerHTML = `
