@@ -34,6 +34,7 @@ function getCurrentTab() {
     });
 }
 
+console.log(document.getElementById("linkAccount"));
 document.getElementById('linkAccount').addEventListener('click', async () => {
     const username = document.getElementById('leetcode-username').value;
 
